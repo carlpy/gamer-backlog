@@ -6,10 +6,9 @@
             </h1>
 
             <nav class="hidden md:flex">
-                <a class="mr-6 font-medium" href="#home">Home</a>
-                <!-- This soon will be vue routers, just wait... -->
-                <a class="mr-6 font-medium" href="#CurrentLogs">Current Backlog</a>
-                <a class="font-medium" href="#CompletedGames">Completed Games</a>
+                <router-link class="mr-6 font-medium" :to="{name: 'home'}">Home</router-link>
+                <router-link class="mr-6 font-medium" :to="{name: 'c-games'}">Current Backlog</router-link>
+                <router-link class="font-medium" :to="{name: 'co-games'}">Completed Games</router-link>
             </nav>
         </header>
 
@@ -18,15 +17,19 @@
             <antd-inp v-model:value="currentSearch" @keyup.enter="searchGame" class="p-3" />
         </div>
 
-        <div>
             <!-- Games rendered -->
+
+		<main>
+			<router-view />
+		</main>
+        <!-- <div>
             <div v-if="displayedGames.length">
                 <GameCards :gameObj="displayedGames" />
             </div>
             <div v-else>
                 <p class="mt-5 text-center text-2xl font-medium">No games found...</p>
             </div>
-        </div>
+        </div> -->
 
         <footer class="p-4 text-center font-medium">Created with ❤️ by Carlos Zambrano</footer>
     </div>
@@ -85,7 +88,7 @@ export default {
         }
 
         onMounted(() => {
-            getGames();
+            // getGames();
         });
 
 		const displayedGames = computed(() => {

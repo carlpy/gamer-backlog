@@ -1,27 +1,22 @@
 <template>
     <li class="game-card mx-auto overflow-hidden rounded border-4 border-slate-800 text-gray-300">
-        <img :src="gameInfo.background_image" class="aspect-[9/16] object-cover" />
+        <img :src="game.background_image" class="aspect-[16/12] object-cover" />
 
         <p class="absolute right-2 top-2 z-20 rounded border-2 border-gray-300 px-2 py-px">
-            {{ dayjs(gameInfo.released).format('YYYY') }}
+            {{ dayjs(game.released).format('YYYY') }}
         </p>
 
-        <button
-            @click="addToLocalBacklog(gameInfo)"
-            class="add-btn invisible absolute left-0 top-0 z-20 flex w-fit items-center rounded border-2 px-2 py-px text-center text-sm"
-        >
+        <button @click="addToLocalBacklog(game)" class="add-btn invisible absolute left-0 top-0 z-20 flex w-fit items-center rounded border-2 px-2 py-px text-center text-sm">
             <div v-if="!isInBacklog">Add <span class="icon-[subway--add] ml-2" /></div>
             <div v-else>Already in the backlog</div>
         </button>
 
         <div class="game-card__info z-20">
-            <p class="mb-1 text-lg font-medium">{{ gameInfo.name }}</p>
+            <p class="mb-1 font-medium">{{ game.name }}</p>
 
             <ul class="flex items-center justify-center text-xs">
-                <template v-for="platformObj in gameInfo.platforms.slice(0, 3)" :key="platformObj.id">
-                    <li class="mr-1 rounded border-2 border-gray-300 px-2 py-px">
-                        {{ platformObj.platform.name }}
-                    </li>
+                <template v-for="platformObj in game.platforms.slice(0, 3)" :key="platformObj.id">
+                    <li class="mr-1 rounded border-2 border-gray-300 px-2 py-px">{{ platformObj.platform.name }}</li>
                 </template>
             </ul>
         </div>
@@ -29,7 +24,7 @@
 </template>
 
 <script>
-import { onMounted, ref, toRef, watch } from 'vue';
+import { onMounted, ref } from 'vue';
 import dayjs from 'dayjs';
 
 export default {
@@ -40,12 +35,7 @@ export default {
         },
     },
     setup(props) {
-        const gameInfo = toRef(props, 'game');
         const isInBacklog = ref(false);
-
-		watch(gameInfo, () => {
-			console.log(gameInfo)
-		})
 
         //----- functions
         function checkBacklog(id) {
@@ -61,11 +51,10 @@ export default {
         }
 
         onMounted(() => {
-            checkBacklog(gameInfo.value.id);
+            checkBacklog(props.game.id);
         });
 
         return {
-            gameInfo,
             isInBacklog,
 
             checkBacklog,
@@ -125,7 +114,7 @@ export default {
 }
 
 .game-card:hover .game-card__info {
-    transform: translate(-50%, -2rem);
+    transform: translate(-50%, 0);
 }
 
 .game-card:hover .add-btn {

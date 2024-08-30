@@ -1,7 +1,7 @@
 <template>
-    <ul class="grid grid-cols-[repeat(auto-fill,minmax(230px,1fr))] gap-4 px-3">
+    <ul class="grid grid-cols-[repeat(auto-fill,minmax(230px,1fr))] gap-4">
         <template v-for="gameIn in gameObj" :key="gameIn.id">
-            <GameItem :game="gameIn" />
+            <GameItem :game="gameIn" :gameSectionIt="gameSection"/>
         </template>
     </ul>
 </template>
@@ -15,9 +15,13 @@ export default {
     },
     props: {
         gameObj: {
-            type: Array,
+            type: Object,
             required: true,
         },
-    }
+		gameSection: {
+			type: String,
+			required: true,
+		}
+    },
 };
 </script>

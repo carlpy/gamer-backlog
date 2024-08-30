@@ -6,9 +6,29 @@
             {{ dayjs(game.released).format('YYYY') }}
         </p>
 
-        <button @click="addToLocalBacklog(game)" class="add-btn invisible absolute left-0 top-0 z-20 flex w-fit items-center rounded border-2 px-2 py-px text-center text-sm">
+        <button
+            v-if="gameSectionIt === 'home'"
+            @click="addToLocalBacklog(game)"
+            :class="btnClasses"
+        >
             <div v-if="!isInBacklog">Add <span class="icon-[subway--add] ml-2" /></div>
             <div v-else>Already in the backlog</div>
+        </button>
+
+        <button
+            v-else-if="gameSectionIt === 'current-back'"
+            @click="markAsComplete(game)"
+            :class="btnClasses"
+        >
+            Mark as complete <span class="icon-[gridicons--add] ml-2" />
+        </button>
+
+        <button
+            v-else
+            @click="removeGame(game)"
+            :class="btnClasses"
+        >
+            Remove from the list <span class="icon-[lets-icons--remove] ml-2" />
         </button>
 
         <div class="game-card__info z-20">
@@ -24,13 +44,17 @@
 </template>
 
 <script>
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import dayjs from 'dayjs';
 
 export default {
-	props: {
-		game: {
-			type: Object,
+    props: {
+        game: {
+            type: Object,
+            required: true,
+        },
+        gameSectionIt: {
+            type: String,
             required: true,
         },
     },
@@ -45,10 +69,23 @@ export default {
 
         function addToLocalBacklog(game) {
             const backLog = JSON.parse(localStorage.getItem('backlog')) || {};
+            game.status = 'in-progress';
             backLog[game.id] = game;
             localStorage.setItem('backlog', JSON.stringify(backLog));
             isInBacklog.value = true;
         }
+
+        function markAsComplete(game) {
+            console.log(game.slug, 'Has been completed');
+            const backlog = JSON.parse(localStorage.getItem('backlog')) || {};
+            game.status = 'completed';
+            backlog[game.id] = game;
+            localStorage.setItem('backlog', JSON.stringify(backlog));
+        }
+
+		const btnClasses = computed(() => {
+			return ['add-btn invisible absolute left-0 top-0 z-20 flex w-max items-center rounded border-2 px-2 py-1 text-center text-sm'];
+		})
 
         onMounted(() => {
             checkBacklog(props.game.id);
@@ -56,9 +93,11 @@ export default {
 
         return {
             isInBacklog,
+			btnClasses,
 
             checkBacklog,
             addToLocalBacklog,
+            markAsComplete,
 
             dayjs,
         };

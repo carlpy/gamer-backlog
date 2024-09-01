@@ -2,32 +2,18 @@
     <li class="game-card mx-auto overflow-hidden rounded border-4 border-slate-800 text-gray-300">
         <img :src="game.background_image" class="aspect-[16/12] object-cover" />
 
-        <p class="absolute right-2 top-2 z-20 rounded border-2 border-gray-300 px-2 py-px">
-            {{ dayjs(game.released).format('YYYY') }}
-        </p>
+        <p class="absolute right-2 top-2 z-20 rounded border-2 border-gray-300 px-2 py-px">{{ dayjs(game.released).format('YYYY') }}</p>
 
-        <button
-            v-if="gameSectionIt === 'home'"
-            @click="addToLocalBacklog(game)"
-            :class="btnClasses"
-        >
+        <button v-if="gameSectionIt === 'home'" @click="addToLocalBacklog(game)" :class="btnClasses">
             <div v-if="!isInBacklog">Add <span class="icon-[subway--add] ml-2" /></div>
             <div v-else>Already in the backlog</div>
         </button>
 
-        <button
-            v-else-if="gameSectionIt === 'current-back'"
-            @click="markAsComplete(game)"
-            :class="btnClasses"
-        >
+        <button v-else-if="gameSectionIt === 'current-back'" @click="markAsComplete(game)" :class="btnClasses">
             Mark as complete <span class="icon-[gridicons--add] ml-2" />
         </button>
 
-        <button
-            v-else
-            @click="removeGame(game)"
-            :class="btnClasses"
-        >
+        <button v-else @click="removeGame(game)" :class="btnClasses">
             Remove from the list <span class="icon-[lets-icons--remove] ml-2" />
         </button>
 
@@ -93,12 +79,16 @@ export default {
 
         return {
             isInBacklog,
+
+			// custom css classes
 			btnClasses,
 
+			// the functions
             checkBacklog,
             addToLocalBacklog,
             markAsComplete,
 
+			// libs
             dayjs,
         };
     },
@@ -106,9 +96,7 @@ export default {
 </script>
 
 <style scoped>
-.game-card {
-    position: relative;
-}
+.game-card { position: relative; }
 
 .game-card::after {
     content: '';
@@ -152,13 +140,6 @@ export default {
     visibility: visible;
 }
 
-.game-card:hover .game-card__info {
-    transform: translate(-50%, 0);
-}
-
-.game-card:hover .add-btn {
-    opacity: 1;
-    top: 50%;
-    visibility: visible;
-}
+.game-card:hover .game-card__info { transform: translate(-50%, 0); } 
+.game-card:hover .add-btn { opacity: 1; top: 50%; visibility: visible; } 
 </style>

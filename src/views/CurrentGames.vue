@@ -1,5 +1,8 @@
 <template>
-    <div><h2 class="mb-6 text-center text-2xl font-medium">Hello this is the backlog section</h2></div>
+    <h2 class="mb-6 text-center text-2xl font-medium">Current Games</h2>
+
+	<GameViews/>
+
 	<div v-if="Object.keys(currentGames).length">
 		<GameCardsVue :gameObj="currentGames" gameSection="current-back"/>
 	</div>
@@ -10,12 +13,15 @@
 </template>
 
 <script>
-import GameCardsVue from '@/components/GameCards.vue';
 import { computed, ref } from 'vue';
+
+import GameViews from '@/components/GameViews.vue';
+import GameCardsVue from '@/components/GameCards.vue';
 
 export default {
 	components: {
 		GameCardsVue,
+		GameViews
 	},
 
 	setup() {

@@ -1,7 +1,15 @@
 <template>
     <div class="mb-6">
-        <p class="mb-4 text-center text-xl font-medium">Type the game you wanna insert into your backlog</p>
-        <antd-inp v-model:value="currentSearch" @keyup.enter="searchGame" class="p-3" />
+        <p class="mb-4 text-center text-3xl font-semibold">Welcome to the Backlog</p>
+
+		<GameViews/>
+
+        <antd-inp
+            v-model:value="currentSearch"
+            @keyup.enter="searchGame"
+            class="w-full p-3"
+            placeholder="Type the game you want into your backlog..."
+        />
     </div>
 
     <div v-if="displayedGames.length">
@@ -21,12 +29,14 @@ import { Input } from 'ant-design-vue';
 
 //-------------------- Vue components --------------------------\\
 import GameCards from '../components/GameCards.vue';
+import GameViews from '@/components/GameViews.vue';
 
 export default {
     components: {
         'antd-inp': Input,
 
         GameCards,
+		GameViews
     },
 
     setup() {
@@ -34,7 +44,7 @@ export default {
         const listOfGames = ref([]);
         // game-searcher
         const currentSearch = ref('');
-        const searchedGames = ref([]); // here we store the result of the querying games
+        const searchedGames = ref([]);
 
         async function getGames() {
             try {
@@ -52,7 +62,9 @@ export default {
             }
 
             try {
-                const { data } = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&search=${encodeURI(currentSearch.value)}`);
+                const { data } = await axios.get(
+                    `https://api.rawg.io/api/games?key=${API_KEY}&search=${encodeURI(currentSearch.value)}`,
+                );
                 searchedGames.value = data.results;
                 console.log(searchedGames.value);
             } catch (e) {
@@ -61,12 +73,11 @@ export default {
         }
 
         const displayedGames = computed(() => {
-            console.log('recompuing displayedGames');
             return searchedGames.value.length ? searchedGames.value : listOfGames.value;
         });
 
-		onMounted(() => {
-            getGames(); 
+        onMounted(() => {
+            getGames();
         });
 
         return {

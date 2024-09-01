@@ -1,5 +1,7 @@
 <template>
-    <h1 class="mb-4 text-2xl font-medium">This is the Completed games page</h1>
+    <h1 class="mb-4 text-2xl font-medium">Completed Games</h1>
+
+	<GameViews/>
 
     <div v-if="Object.keys(completed).length">
         <GameCards :gameObj="completed" gameSection="completed" />
@@ -10,12 +12,15 @@
 </template>
 
 <script>
-import GameCards from '@/components/GameCards.vue';
 import { computed, ref } from 'vue';
+
+import GameCards from '@/components/GameCards.vue';
+import GameViews from '@/components/GameViews.vue';
 
 export default {
     components: {
         GameCards,
+		GameViews
     },
 
     setup() {

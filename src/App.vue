@@ -1,25 +1,30 @@
 <template>
-    <div class="mx-auto grid min-h-screen max-w-[1200px] grid-rows-[90px_1fr_90px] gap-4">
-        <header class="mb-4 flex items-center justify-between border-b border-gray-300 p-4">
-            <h1 class="flex items-center justify-between text-center text-3xl font-bold">
-                Gamer Backlog <span class="icon-[maki--gaming] ml-4" />
-            </h1>
+    <div class="flex min-h-screen">
+        <AsideNavigation />
 
-            <nav class="hidden md:flex">
-                <router-link class="mr-6 font-medium" :to="{ name: 'home' }">Home</router-link>
-                <router-link class="mr-6 font-medium" :to="{ name: 'c-games' }">Current Backlog</router-link>
-                <router-link class="font-medium" :to="{ name: 'co-games' }">Completed Games</router-link>
-            </nav>
-        </header>
+        <div class="mx-auto mt-12 grid w-3/5 max-w-[1200px] grid-rows-[1fr_60px]">
+            <main>
+                <router-view />
+            </main>
 
-        <main class="w-full">
-            <router-view />
-        </main>
-
-        <footer class="p-4 text-center font-medium">Created with ❤️ by Carlos Zambrano</footer>
+            <footer class="p-4 text-center font-medium">Created with ❤️ by Carlos Zambrano</footer>
+        </div>
     </div>
 </template>
 
+<!--  
+	(Goals for 1/09/24)
+	- make a new component for the GameCards View in details
+	- make a composable and learn how to encapsulate the logic of the component
+	- make a new view so when an user click a game it gets to a page where it shows all the info of the game
+-->
+
 <script>
-export default {};
+import AsideNavigation from './components/AsideNavigation.vue';
+
+export default {
+    components: {
+        AsideNavigation,
+    }
+};
 </script>

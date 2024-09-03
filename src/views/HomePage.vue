@@ -2,7 +2,7 @@
     <div class="mb-6">
         <p class="mb-4 text-center text-3xl font-semibold">Welcome to the Backlog</p>
 
-		<GameViews/>
+        <GameViews @updateView="setGameViewVal" />
 
         <antd-inp
             v-model:value="currentSearch"
@@ -13,7 +13,7 @@
     </div>
 
     <div v-if="displayedGames.length">
-        <GameCards :gameObj="displayedGames" gameSection="home" />
+        <GameCards :gameObj="displayedGames" gameSection="home" :gameView="gameViewVal" />
     </div>
     <div v-else>
         <p class="mt-5 text-center text-2xl font-medium">No games found...</p>
@@ -28,15 +28,18 @@ import { ref, onMounted, computed } from 'vue';
 import { Input } from 'ant-design-vue';
 
 //-------------------- Vue components --------------------------\\
-import GameCards from '../components/GameCards.vue';
+import GameCards from '@/components/GameCards.vue';
 import GameViews from '@/components/GameViews.vue';
+
+//-------------------- Composables --------------------------\\
+import { useGameView } from '@/composables/useGameView';
 
 export default {
     components: {
         'antd-inp': Input,
 
         GameCards,
-		GameViews
+        GameViews,
     },
 
     setup() {
@@ -45,6 +48,9 @@ export default {
         // game-searcher
         const currentSearch = ref('');
         const searchedGames = ref([]);
+
+        // the views-switching info
+        const { gameViewVal, setGameViewVal } = useGameView();
 
         async function getGames() {
             try {
@@ -82,12 +88,13 @@ export default {
 
         return {
             listOfGames,
-
             currentSearch,
             searchedGames,
+            gameViewVal /* with a composable or some kind of re-usability tecnique i could make this more ordered */,
 
-            // async
-            searchGame,
+            //functions
+            setGameViewVal,
+            searchGame, // async
 
             // computed
             displayedGames,

@@ -1,54 +1,49 @@
 <template>
-    <h1 class="mb-4 text-2xl font-medium">Completed Games</h1>
+    <h1 class="mb-4 text-center text-3xl font-semibold">Completed Games</h1>
 
-	<GameViews/>
+    <GameViews @updateView="setGameViewVal" />
 
-    <div v-if="Object.keys(completed).length">
-        <GameCards :gameObj="completed" gameSection="completed" />
-    </div>
-    <div v-else>
+    <template v-if="Object.keys(completed).length">
+        <GameCards :gameObj="completed" gameSection="completed" :gameView="gameViewVal" />
+    </template>
+    <template v-else>
         <h2 class="text-center font-medium">There's no completed games yet... 🧑‍💻</h2>
-    </div>
+    </template>
 </template>
 
 <script>
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 
+//-------------------- Vue components --------------------------\\
 import GameCards from '@/components/GameCards.vue';
 import GameViews from '@/components/GameViews.vue';
+
+//-------------------- Composables --------------------------\\
+import { useGameView } from '@/composables/useGameView';
+import { useFilteredGames } from '@/composables/useFilteredGames';
 
 export default {
     components: {
         GameCards,
-		GameViews
+        GameViews,
     },
 
     setup() {
         const games = ref(JSON.parse(localStorage.getItem('backlog')));
 
-        const completed = computed(() => {
-            const completedGames = {};
-            const game = games.value;
-
-            for (let i in game) {
-                if (game[i].status == 'completed') {
-                    completedGames[i] = game[i];
-                    console.log(i, game[i]);
-                }
-            }
-
-            return completedGames;
-        });
-
-		console.log('games value: ', games.value, 'completed games: ', completed.value)
+        const { filteredGames } = useFilteredGames(games, 'completed');
+        const { gameViewVal, setGameViewVal } = useGameView();
 
         return {
             games,
+            gameViewVal,
 
-            completed,
+            // computed
+            completed: filteredGames,
+
+            // functions
+            setGameViewVal,
         };
     },
 };
 </script>
-
-<style></style>

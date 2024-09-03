@@ -13,10 +13,12 @@
 </template>
 
 <!--  
-	(Goals for 1/09/24)
-	- make a new component for the GameCards View in details
-	- make a composable and learn how to encapsulate the logic of the component
-	- make a new view so when an user click a game it gets to a page where it shows all the info of the game
+	(Tasks)
+	- make a composable and learn how to encapsulate the logic of the component 👍
+	- make a new component for the GameCards View in details 👍
+	- fit the proper classes so when user clicks in details all the listed games appears as a list such as windows 👍 
+	- make a new view so when an user click a game it gets to a page where it shows all the info of the game ❓
+	- delete the element and make it update it inmediatly ❌ 
 -->
 
 <script>

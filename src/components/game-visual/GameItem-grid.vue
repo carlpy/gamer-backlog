@@ -2,20 +2,15 @@
     <li class="game-card mx-auto overflow-hidden rounded border-2 border-slate-800 text-gray-300">
         <img :src="game.background_image" class="aspect-[16/12] object-cover" />
 
-        <p class="absolute right-2 top-2 z-20 rounded border-2 border-gray-300 px-2 py-px">{{ dayjs(game.released).format('YYYY') }}</p>
+        <p class="absolute right-2 top-2 z-20 rounded border-2 border-gray-300 px-2 py-px">
+            {{ dayjs(game.released).format('YYYY') }}
+        </p>
 
-        <button v-if="gameSectionIt === 'home'" @click="updateBacklog(game, 'in-progress')" :class="btnClasses">
-            <div v-if="!isInBacklog">Add <span class="icon-[subway--add] ml-2" /></div>
-            <div v-else>Already in the backlog</div>
-        </button>
-
-        <button v-else-if="gameSectionIt === 'current-back'" @click="updateBacklog(game, 'completed')" :class="btnClasses">
-            Mark as complete <span class="icon-[gridicons--add] ml-2" />
-        </button>
-
-        <button v-else @click="deleteFromBacklog(game)" :class="btnClasses">
-            Remove from the list <span class="icon-[lets-icons--remove] ml-2" />
-        </button>
+        <ButtonGame
+            :gameSection="gameSectionIt"
+            :gameWhole="game"
+            btnClasses="'add-btn absolute z-20 flex w-max items-center rounded border-2 px-2 py-1 text-center text-sm mr-4'"
+        />
 
         <div class="game-card__info z-20">
             <p class="mb-1 font-medium">{{ game.name }}</p>
@@ -30,13 +25,17 @@
 </template>
 
 <script>
-import { onMounted } from 'vue';
 import dayjs from 'dayjs';
+
+import ButtonGame from '../ButtonGame.vue';
 
 //---------------------- Composables -----------------------\\
 import { useBacklog } from '@/composables/useBacklog';
 
 export default {
+    components: {
+        ButtonGame,
+    },
     props: {
         game: {
             type: Object,
@@ -48,24 +47,17 @@ export default {
         },
     },
     setup(props) {
-		const { isInBacklog, checkBacklog, updateBacklog, deleteFromBacklog, btnClassesGrid } = useBacklog();
-
-        onMounted(() => {
-            checkBacklog(props.game.id);
-        });
+        const { updateBacklog, deleteFromBacklog, gameLinkRouter } = useBacklog();
+        const gameLink = gameLinkRouter(props.game);
 
         return {
-            isInBacklog,
+            gameLink,
 
-			// custom css classes
-			btnClasses: btnClassesGrid,
+            // the functions
+            updateBacklog,
+            deleteFromBacklog,
 
-			// the functions
-            checkBacklog,
-			updateBacklog,
-			deleteFromBacklog,
-
-			// libs
+            // libs
             dayjs,
         };
     },
@@ -73,7 +65,9 @@ export default {
 </script>
 
 <style scoped>
-.game-card { position: relative; }
+.game-card {
+    position: relative;
+}
 
 .game-card::after {
     content: '';
@@ -117,6 +111,12 @@ export default {
     visibility: visible;
 }
 
-.game-card:hover .game-card__info { transform: translate(-50%, 0); } 
-.game-card:hover .add-btn { opacity: 1; top: 50%; visibility: visible; } 
+.game-card:hover .game-card__info {
+    transform: translate(-50%, 0);
+}
+.game-card:hover .add-btn {
+    opacity: 1;
+    top: 50%;
+    visibility: visible;
+}
 </style>

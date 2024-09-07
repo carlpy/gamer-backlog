@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 
 export function useBacklog() {
     const isInBacklog = ref(false);
@@ -18,19 +18,15 @@ export function useBacklog() {
 
     function deleteFromBacklog(game) {
         const backLog = JSON.parse(localStorage.getItem('backlog'));
-		backLog[game.id] = 'Azucare';
-        /* delete backLog[game.id]; */
+		delete backLog[game.id]
         localStorage.setItem('backlog', JSON.stringify(backLog));
 		isInBacklog.value = false;
+		console.log(game.name, ' just deleted')
     }
 
-    const btnClasses = computed(() => {
-        return ['flex w-max items-center rounded border-2 px-2 py-1 text-center text-sm mr-4'];
-    });
-
-    const btnClassesGrid = computed(() => {
-        return ['add-btn absolute z-20 flex w-max items-center rounded border-2 px-2 py-1 text-center text-sm mr-4'];
-    });
+	function gameLinkRouter(game) { 
+		return '/games/'+game.id;
+	}
 
     return {
         // reactive vars
@@ -40,9 +36,8 @@ export function useBacklog() {
         checkBacklog,
         updateBacklog,
 		deleteFromBacklog,
+		gameLinkRouter,
 
         // computed
-        btnClasses,
-		btnClassesGrid,
     };
 }

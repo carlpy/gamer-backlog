@@ -1,5 +1,5 @@
 <template>
-    <li class="mx-auto mb-2 flex items-center overflow-hidden rounded border-2">
+    <li class="mx-auto mb-2 flex cursor-pointer items-center overflow-hidden rounded border-2">
         <img :src="game.background_image" class="mr-5 aspect-[16/12] w-32 object-cover" />
 
         <div class="grow">
@@ -12,34 +12,33 @@
                     <li class="mr-1 rounded border-2 border-gray-300 px-2 py-px">{{ platformObj.platform.name }}</li>
                 </template>
             </ul>
-
         </div>
-		<p class="mr-6"><span v-for="(game, index) in parseInt(game.rating)" class="icon-[noto--star]" :key="index"/> {{ game.rating }}</p>
 
-		
-        <button v-if="gameSectionIt === 'home'" @click="updateBacklog(game, 'in-progress')" :class="btnClasses">
-            <div v-if="!isInBacklog">Add <span class="icon-[subway--add] ml-2" /></div>
-            <div v-else>Already in the backlog</div>
-        </button>
+        <p class="mr-6">
+            <span v-for="(game, index) in parseInt(game.rating)" class="icon-[noto--star]" :key="index" /> {{ game.rating }}
+        </p>
 
-        <button v-else-if="gameSectionIt === 'current-back'" @click="updateBacklog(game, 'completed')" :class="btnClasses">
-            Mark as complete <span class="icon-[gridicons--add] ml-2" />
-        </button>
-
-        <button v-else @click="deleteFromBacklog(game)" :class="btnClasses">
-            Remove from the list <span class="icon-[lets-icons--remove] ml-2" />
-        </button>
+        <ButtonGame
+            :gameSection="gameSectionIt"
+            :gameWhole="game"
+            btnClasses="flex w-max items-center rounded border-2 px-2 py-1 text-center text-sm mr-4"
+        />
     </li>
 </template>
 
 <script>
-import { onMounted } from 'vue';
 import dayjs from 'dayjs';
+
+//-------------------- Vue components --------------------------\\
+import ButtonGame from '../ButtonGame.vue';
 
 //---------------------- Composables -----------------------\\
 import { useBacklog } from '@/composables/useBacklog';
 
 export default {
+    components: {
+        ButtonGame,
+    },
     props: {
         game: {
             type: Object,
@@ -51,22 +50,15 @@ export default {
         },
     },
     setup(props) {
-		const { isInBacklog, checkBacklog, updateBacklog, deleteFromBacklog, btnClasses } = useBacklog();
-
-        onMounted(() => {
-            checkBacklog(props.game.id);
-        });
+        const {  updateBacklog, deleteFromBacklog, gameLinkRouter } = useBacklog();
+        const gameLink = gameLinkRouter(props.game);
 
         return {
-            isInBacklog,
-
-            // custom css classes
-            btnClasses,
+            gameLink,
 
             // the functions
-            checkBacklog,
             updateBacklog,
-			deleteFromBacklog,
+            deleteFromBacklog,
 
             // libs
             dayjs,

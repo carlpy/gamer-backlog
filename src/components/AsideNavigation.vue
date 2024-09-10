@@ -1,7 +1,7 @@
 <template>
     <aside
         class="fixed left-0 top-0 z-30 flex h-screen max-h-screen flex-col justify-between overflow-hidden bg-stone-900 p-6 text-white transition-[width]"
-        :class="{ 'w-20': !isOpen, 'w-64': isOpen }"
+        :class="{ 'w-[70px]': !isOpen, 'w-64': isOpen }"
     >
         <div>
             <h1 class="mb-12 divide-y-4 text-center text-3xl">
@@ -24,9 +24,9 @@
             </nav>
         </div>
 
-        <button @click="toggleModal" class="self-end">
+        <button @click="toggleModal" class="self-center">
             <span
-                class="icon-[material-symbols--expand-circle-right-rounded] size-10 transition-transform"
+                class="icon-[material-symbols--expand-circle-right-rounded] size-9 transition-transform"
                 :class="{ 'rotate-180': isOpen }"
             />
         </button>

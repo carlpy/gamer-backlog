@@ -17,16 +17,27 @@ export function useBacklog() {
     }
 
     function deleteFromBacklog(game) {
+        const backLog = JSON.parse(localStorage.getItem('backlog')) || {};
+        game.status = 'Deleted';
+        backLog[game.id] = game;
+        localStorage.setItem('backlog', JSON.stringify(backLog));
+        isInBacklog.value = true;
+    }  // this function set the games with the status deleted so the computed props doesn't detect it anymore
+
+    /* function deleteFromBacklog(game) {
         const backLog = JSON.parse(localStorage.getItem('backlog'))  || {};
 		delete backLog[game.id]
         localStorage.setItem('backlog', JSON.stringify(backLog));
 		isInBacklog.value = false;
 		console.log(game.name, ' just deleted')
-    }
+    } */ 
+   	/* 
+		* it seems that i have to change the object of games at CompletedGames.vue, but that will required child-parent comunication, such as a lot of emits
+    */
 
-	function gameLinkRouter(game) { 
-		return '/games/'+game.id;
-	}
+    function gameLinkRouter(game) {
+        return '/games/' + game.id;
+    }
 
     return {
         // reactive vars
@@ -35,8 +46,8 @@ export function useBacklog() {
         // functions
         checkBacklog,
         updateBacklog,
-		deleteFromBacklog,
-		gameLinkRouter,
+        deleteFromBacklog,
+        gameLinkRouter,
 
         // computed
     };

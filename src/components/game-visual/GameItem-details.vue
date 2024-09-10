@@ -27,7 +27,6 @@
 
 <script>
 import dayjs from 'dayjs';
-import { RouterLink } from 'vue-router';
 
 //-------------------- Vue components --------------------------\\
 import ButtonGame from '../ButtonGame.vue';

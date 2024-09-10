@@ -45,7 +45,6 @@ export default {
     },
 
     setup() {
-        /* const API_KEY = '797a50b79c294570af8c3724295452ea'; */
 		const API_KEY = import.meta.env.VITE_API_KEY;
         const listOfGames = ref([]);
 		const isLoading = ref(true)
@@ -58,7 +57,7 @@ export default {
 
         async function getGames() {
             try {
-                const { data } = await axios.get(`/api/games?key=${API_KEY}`);
+                const { data } = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}`);
                 listOfGames.value = data.results;
             } catch (e) {
                 console.log(e);

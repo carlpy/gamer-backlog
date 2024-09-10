@@ -121,7 +121,7 @@ export default {
 
         async function getGame() {
             try {
-                const { data } = await axios.get(`/api/games/${gameId}?key=${API_KEY}`);
+                const { data } = await axios.get(`https://api.rawg.io/api/games/${gameId}?key=${API_KEY}`);
                 console.log(data);
                 game.value = data;
             } catch (e) {

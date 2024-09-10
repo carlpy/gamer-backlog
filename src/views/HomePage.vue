@@ -12,12 +12,12 @@
         />
     </div>
 
-    <div v-if="displayedGames.length">
+    <div v-if="!isLoading">
         <GameCards :gameObj="displayedGames" gameSection="home" :gameView="gameViewVal" />
     </div>
-    <div v-else>
-        <p class="mt-5 text-center text-2xl font-medium">No games found...</p>
-    </div>
+    <div v-else class="mt-4 text-center">
+		<SpinnerAntd size="large"/>
+	</div>
 </template>
 
 <script>
@@ -30,6 +30,7 @@ import { Input } from 'ant-design-vue';
 //-------------------- Vue components --------------------------\\
 import GameCards from '@/components/GameCards.vue';
 import GameViews from '@/components/GameViews.vue';
+import SpinnerAntd from '@/components/utils/SpinnerAntd.vue'
 
 //-------------------- Composables --------------------------\\
 import { useGameView } from '@/composables/useGameView';
@@ -37,14 +38,17 @@ import { useGameView } from '@/composables/useGameView';
 export default {
     components: {
         'antd-inp': Input,
+		SpinnerAntd,
 
         GameCards,
         GameViews,
     },
 
     setup() {
-        const API_KEY = '797a50b79c294570af8c3724295452ea';
+        /* const API_KEY = '797a50b79c294570af8c3724295452ea'; */
+		const API_KEY = import.meta.env.VITE_API_KEY;
         const listOfGames = ref([]);
+		const isLoading = ref(true)
         // game-searcher
         const currentSearch = ref('');
         const searchedGames = ref([]);
@@ -54,11 +58,13 @@ export default {
 
         async function getGames() {
             try {
-                const { data } = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}`);
+                const { data } = await axios.get(`/api/games?key=${API_KEY}`);
                 listOfGames.value = data.results;
             } catch (e) {
                 console.log(e);
-            }
+            } finally {
+				isLoading.value = false;
+			}
         }
 
         async function searchGame() {
@@ -77,7 +83,6 @@ export default {
                 console.log(e);
             }
         }
-
         const displayedGames = computed(() => {
             return searchedGames.value.length ? searchedGames.value : listOfGames.value;
         });
@@ -88,6 +93,7 @@ export default {
 
         return {
             listOfGames,
+			isLoading,
             currentSearch,
             searchedGames,
             gameViewVal /* with a composable or some kind of re-usability tecnique i could make this more ordered */,

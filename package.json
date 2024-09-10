@@ -13,6 +13,7 @@
   "dependencies": {
     "ant-design-vue": "^4.2.3",
     "axios": "^1.7.4",
+    "circle-progress.vue": "^3.2.1",
     "dayjs": "^1.11.13",
     "vue": "^3.4.29",
     "vue-router": "^4.4.3"

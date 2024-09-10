@@ -46,7 +46,6 @@ export default {
         return {
             // computed
             viewClassesContainer,
-            //viewClassesGame,
 
             //funcs
         };

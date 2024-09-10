@@ -4,7 +4,8 @@
 
         <div class="grow">
             <p class="mb-1 font-medium">
-                {{ game.name }} <span class="text-gray-500">({{ dayjs(game.released).format('YYYY') }})</span>
+                <RouterLink :to="{ name: 'game-info', params: { id: game.id } }">{{ game.name }}</RouterLink>
+                <span class="text-gray-500">({{ dayjs(game.released).format('YYYY') }})</span>
             </p>
 
             <ul class="justify-left flex items-center text-xs">
@@ -18,16 +19,15 @@
             <span v-for="(game, index) in parseInt(game.rating)" class="icon-[noto--star]" :key="index" /> {{ game.rating }}
         </p>
 
-        <ButtonGame
-            :gameSection="gameSectionIt"
-            :gameWhole="game"
-            btnClasses="flex w-max items-center rounded border-2 px-2 py-1 text-center text-sm mr-4"
-        />
+        <div class="mr-4">
+            <ButtonGame :gameSection="gameSectionIt" :gameWhole="game" view="details" />
+        </div>
     </li>
 </template>
 
 <script>
 import dayjs from 'dayjs';
+import { RouterLink } from 'vue-router';
 
 //-------------------- Vue components --------------------------\\
 import ButtonGame from '../ButtonGame.vue';
@@ -49,13 +49,10 @@ export default {
             required: true,
         },
     },
-    setup(props) {
-        const {  updateBacklog, deleteFromBacklog, gameLinkRouter } = useBacklog();
-        const gameLink = gameLinkRouter(props.game);
+    setup() {
+        const { updateBacklog, deleteFromBacklog } = useBacklog();
 
         return {
-            gameLink,
-
             // the functions
             updateBacklog,
             deleteFromBacklog,

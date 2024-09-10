@@ -1,9 +1,10 @@
 <template>
-    <button :class="btnClasses" @click.stop="handleClick">
+    <button :class="btnClasses" class="mb-1.5" @click="handleClick">
         <div>{{ btnContent[0] }}</div>
         <span :class="btnContent[1]" class="ml-2"></span>
     </button>
 </template>
+
 <script>
 import { computed, toRefs, onMounted } from 'vue';
 
@@ -20,7 +21,7 @@ export default {
             type: Object,
             required: true,
         },
-        btnClasses: {
+        view: {
             type: String,
             required: true,
         },
@@ -55,8 +56,14 @@ export default {
             }
         }
 
+        const btnClasses = computed(() => {
+            let baseClasses = 'flex w-max items-center justify-center rounded border-2 px-2 py-1 text-center text-xs mr-4';
+            return props.view === 'details' ? baseClasses : baseClasses + ' add-btn absolute z-20';
+        });
+
         return {
             btnContent,
+            btnClasses,
             // functions
             handleClick,
         };

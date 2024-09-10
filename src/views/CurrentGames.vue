@@ -3,12 +3,12 @@
 
 	<GameViews @updateView="setGameViewVal"/>
 
-	<div v-if="Object.keys(currentGames).length">
+	<template v-if="Object.keys(currentGames).length">
 		<GameCardsVue :gameObj="currentGames" gameSection="current-back" :gameView="gameViewVal"/>
-	</div>
-	<div v-else>
+	</template>
+	<template v-else>
 		<h2 class="text-center font-medium ">There's no games to play, what a day... 😴</h2>
-	</div>
+	</template>
 	
 </template>
 

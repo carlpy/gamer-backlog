@@ -1,5 +1,5 @@
 <template>
-    <div class="mb-5 text-center">
+    <div class="mb-5 hidden text-center lg:block">
         <a-segmented v-model:value="value" :options="data" @change="giveView" />
     </div>
 </template>

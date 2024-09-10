@@ -1,6 +1,6 @@
 <template>
     <aside
-        class="fixed left-0 top-0 z-30 flex h-full max-h-screen flex-col justify-between overflow-hidden bg-stone-900 p-6 text-white transition-[width]"
+        class="fixed left-0 top-0 z-30 flex h-screen max-h-screen flex-col justify-between overflow-hidden bg-stone-900 p-6 text-white transition-[width]"
         :class="{ 'w-20': !isOpen, 'w-64': isOpen }"
     >
         <div>

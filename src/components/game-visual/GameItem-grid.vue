@@ -6,14 +6,12 @@
             {{ dayjs(game.released).format('YYYY') }}
         </p>
 
-        <ButtonGame
-            :gameSection="gameSectionIt"
-            :gameWhole="game"
-            btnClasses="'add-btn absolute z-20 flex w-max items-center rounded border-2 px-2 py-1 text-center text-sm mr-4'"
-        />
+        <div>
+            <ButtonGame :gameSection="gameSectionIt" :gameWhole="game" view="grid" />
+        </div>
 
         <div class="game-card__info z-20">
-            <p class="mb-1 font-medium">{{ game.name }}</p>
+            <RouterLink :to="{ name: 'game-info', params: { id: game.id } }">{{ game.name }}</RouterLink>
 
             <ul class="flex items-center justify-center text-xs">
                 <template v-for="platformObj in game.platforms.slice(0, 3)" :key="platformObj.id">
@@ -26,7 +24,9 @@
 
 <script>
 import dayjs from 'dayjs';
+import { RouterLink } from 'vue-router';
 
+//-------------------- Vue components --------------------------\\
 import ButtonGame from '../ButtonGame.vue';
 
 //---------------------- Composables -----------------------\\
@@ -46,12 +46,10 @@ export default {
             required: true,
         },
     },
-    setup(props) {
-        const { updateBacklog, deleteFromBacklog, gameLinkRouter } = useBacklog();
-        const gameLink = gameLinkRouter(props.game);
+    setup() {
+        const { updateBacklog, deleteFromBacklog } = useBacklog();
 
         return {
-            gameLink,
 
             // the functions
             updateBacklog,
@@ -112,11 +110,11 @@ export default {
 }
 
 .game-card:hover .game-card__info {
-    transform: translate(-50%, 0);
+    transform: translate(-50%, -10%);
 }
 .game-card:hover .add-btn {
     opacity: 1;
-    top: 50%;
+    top: 45%;
     visibility: visible;
 }
 </style>

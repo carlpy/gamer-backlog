@@ -17,7 +17,7 @@ export function useBacklog() {
     }
 
     function deleteFromBacklog(game) {
-        const backLog = JSON.parse(localStorage.getItem('backlog'));
+        const backLog = JSON.parse(localStorage.getItem('backlog'))  || {};
 		delete backLog[game.id]
         localStorage.setItem('backlog', JSON.stringify(backLog));
 		isInBacklog.value = false;

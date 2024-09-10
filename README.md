@@ -3,3 +3,6 @@ This is a backlog, which is an software that allows you to organize all the game
 
 ## Tecnologies
 In this proyect i used Vue3, Axios, Vite and TailwindCSS
+
+# Live Site
+here you can check my proyect out: https://gamerbacklog-cz.netlify.app/

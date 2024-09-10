@@ -1,6 +1,9 @@
 <template>
     <ul :class="viewClassesContainer">
-        <template v-for="gameIn in gameObj" :key="gameIn.id">
+        <template
+            v-for="gameIn in gameObj"
+            :key="gameIn.id"
+        >
             <component
                 :is="gameView === 'Grid' ? 'game-item-grid' : 'game-item-details'"
                 :game="gameIn"

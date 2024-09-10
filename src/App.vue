@@ -9,7 +9,11 @@
 
             <footer class="p-4 text-center font-medium">
                 Created with ❤️ by
-                <a class="decoration-inherit hover:underline" href="https://github.com/carlpy">Carlos Zambrano</a>
+                <a
+                    class="decoration-inherit hover:underline"
+                    href="https://github.com/carlpy"
+                    >Carlos Zambrano</a
+                >
             </footer>
         </section>
     </div>
@@ -23,9 +27,9 @@ export default {
     components: {
         AsideNavigation,
     },
-	setup() {
-		const API_KEY = import.meta.env.VITE_API_KEY;
-		console.log(API_KEY)
-	}
+    setup() {
+        const API_KEY = import.meta.env.VITE_API_KEY;
+        console.log(API_KEY);
+    },
 };
 </script>

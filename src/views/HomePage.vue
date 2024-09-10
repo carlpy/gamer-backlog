@@ -13,11 +13,18 @@
     </div>
 
     <div v-if="!isLoading">
-        <GameCards :gameObj="displayedGames" gameSection="home" :gameView="gameViewVal" />
+        <GameCards
+            :gameObj="displayedGames"
+            gameSection="home"
+            :gameView="gameViewVal"
+        />
     </div>
-    <div v-else class="mt-4 text-center">
-		<SpinnerAntd size="large"/>
-	</div>
+    <div
+        v-else
+        class="mt-4 text-center"
+    >
+        <SpinnerAntd size="large" />
+    </div>
 </template>
 
 <script>
@@ -30,7 +37,7 @@ import { Input } from 'ant-design-vue';
 //-------------------- Vue components --------------------------\\
 import GameCards from '@/components/GameCards.vue';
 import GameViews from '@/components/GameViews.vue';
-import SpinnerAntd from '@/components/utils/SpinnerAntd.vue'
+import SpinnerAntd from '@/components/utils/SpinnerAntd.vue';
 
 //-------------------- Composables --------------------------\\
 import { useGameView } from '@/composables/useGameView';
@@ -38,16 +45,16 @@ import { useGameView } from '@/composables/useGameView';
 export default {
     components: {
         'antd-inp': Input,
-		SpinnerAntd,
+        SpinnerAntd,
 
         GameCards,
         GameViews,
     },
 
     setup() {
-		const API_KEY = import.meta.env.VITE_API_KEY;
+        const API_KEY = import.meta.env.VITE_API_KEY;
         const listOfGames = ref([]);
-		const isLoading = ref(true)
+        const isLoading = ref(true);
         // game-searcher
         const currentSearch = ref('');
         const searchedGames = ref([]);
@@ -62,8 +69,8 @@ export default {
             } catch (e) {
                 console.log(e);
             } finally {
-				isLoading.value = false;
-			}
+                isLoading.value = false;
+            }
         }
 
         async function searchGame() {
@@ -92,7 +99,7 @@ export default {
 
         return {
             listOfGames,
-			isLoading,
+            isLoading,
             currentSearch,
             searchedGames,
             gameViewVal /* with a composable or some kind of re-usability tecnique i could make this more ordered */,

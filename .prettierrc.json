@@ -3,6 +3,7 @@
     "semi": true,
     "tabWidth": 4,
     "singleQuote": true,
+	"singleAttributePerLine": true,
     "printWidth": 130,
     "trailingComma": "all",
     "plugins": ["prettier-plugin-tailwindcss"]

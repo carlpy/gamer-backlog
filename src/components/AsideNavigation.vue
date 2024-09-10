@@ -9,22 +9,40 @@
             </h1>
 
             <nav class="absolute flex flex-col items-start gap-y-6">
-                <router-link class="flex items-center text-lg font-medium" :to="{ name: 'home' }"
+                <router-link
+                    class="flex items-center text-lg font-medium"
+                    :to="{ name: 'home' }"
                     ><span class="icon-[ion--home] mr-4 size-6" />
-                    <span class="" :class="{ hidden: !isOpen }">Home</span>
+                    <span
+                        :class="{ hidden: !isOpen }"
+                        >Home</span
+                    >
                 </router-link>
-                <router-link class="flex items-center text-lg font-medium" :to="{ name: 'c-games' }"
+                <router-link
+                    class="flex items-center text-lg font-medium"
+                    :to="{ name: 'c-games' }"
                     ><span class="icon-[fluent-mdl2--backlog-list] mr-4 size-6" />
-                    <span class="" :class="{ hidden: !isOpen }">Current Backlog</span>
+                    <span
+                        :class="{ hidden: !isOpen }"
+                        >Current Backlog</span
+                    >
                 </router-link>
-                <router-link class="flex items-center text-lg font-medium" :to="{ name: 'co-games' }"
+                <router-link
+                    class="flex items-center text-lg font-medium"
+                    :to="{ name: 'co-games' }"
                     ><span class="icon-[fluent-mdl2--completed-solid] mr-4 size-6" />
-                    <span class="" :class="{ hidden: !isOpen }">Completed Games</span>
+                    <span
+                        :class="{ hidden: !isOpen }"
+                        >Completed Games</span
+                    >
                 </router-link>
             </nav>
         </div>
 
-        <button @click="toggleModal" class="self-center">
+        <button
+            @click="toggleModal"
+            class="self-center"
+        >
             <span
                 class="icon-[material-symbols--expand-circle-right-rounded] size-9 transition-transform"
                 :class="{ 'rotate-180': isOpen }"

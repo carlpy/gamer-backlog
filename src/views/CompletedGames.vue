@@ -4,7 +4,11 @@
     <GameViews @updateView="setGameViewVal" />
 
     <template v-if="Object.keys(completed).length">
-        <GameCards :gameObj="completed" gameSection="completed" :gameView="gameViewVal" />
+        <GameCards
+            :gameObj="completed"
+            gameSection="completed"
+            :gameView="gameViewVal"
+        />
     </template>
     <template v-else>
         <h2 class="text-center font-medium">There's no completed games yet... 🧑‍💻</h2>

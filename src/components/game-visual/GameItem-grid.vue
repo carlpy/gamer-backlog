@@ -1,20 +1,30 @@
 <template>
     <li class="game-card mx-auto overflow-hidden rounded border-2 border-slate-800 text-gray-300">
-        <img :src="game.background_image" class="aspect-[16/12] object-cover" />
+        <img
+            :src="game.background_image"
+            class="aspect-[16/12] object-cover"
+        />
 
         <p class="absolute right-2 top-2 z-20 rounded border-2 border-gray-300 px-2 py-px">
             {{ dayjs(game.released).format('YYYY') }}
         </p>
 
         <div>
-            <ButtonGame :gameSection="gameSectionIt" :gameWhole="game" view="grid" />
+            <ButtonGame
+                :gameSection="gameSectionIt"
+                :gameWhole="game"
+                view="grid"
+            />
         </div>
 
         <div class="game-card__info z-20">
             <RouterLink :to="{ name: 'game-info', params: { id: game.id } }">{{ game.name }}</RouterLink>
 
             <ul class="flex items-center justify-center text-xs">
-                <template v-for="platformObj in game.platforms.slice(0, 3)" :key="platformObj.id">
+                <template
+                    v-for="platformObj in game.platforms.slice(0, 3)"
+                    :key="platformObj.id"
+                >
                     <li class="mr-1 rounded border-2 border-gray-300 px-2 py-px">{{ platformObj.platform.name }}</li>
                 </template>
             </ul>
@@ -24,7 +34,6 @@
 
 <script>
 import dayjs from 'dayjs';
-import { RouterLink } from 'vue-router';
 
 //-------------------- Vue components --------------------------\\
 import ButtonGame from '../ButtonGame.vue';
@@ -50,7 +59,6 @@ export default {
         const { updateBacklog, deleteFromBacklog } = useBacklog();
 
         return {
-
             // the functions
             updateBacklog,
             deleteFromBacklog,

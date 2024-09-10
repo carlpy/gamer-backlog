@@ -1,19 +1,32 @@
 <template>
-    <RouterLink to="/" class="mb-8 inline-block rounded border border-gray-400 px-4 py-1">
+    <RouterLink
+        to="/"
+        class="mb-8 inline-block rounded border border-gray-400 px-4 py-1"
+    >
         <span>Go back</span>
         <span class="icon-[material-symbols--arrow-circle-left-rounded] ml-1" />
     </RouterLink>
 
-    <section v-if="!isLoading" class="gap-x-10 lg:flex">
+    <section
+        v-if="!isLoading"
+        class="gap-x-10 lg:flex"
+    >
         <section class="mb-8 grow">
             <h1 class="mb-3 text-4xl font-medium uppercase">{{ game.name }}</h1>
             <div class="mb-4">
-                <span v-for="(game, index) in parseInt(game.rating)" class="icon-[noto--star]" :key="index" />
+                <span
+                    v-for="(game, index) in parseInt(game.rating)"
+                    class="icon-[noto--star]"
+                    :key="index"
+                />
                 <span class="ml-2">{{ game.rating }}</span>
             </div>
 
             <div class="lg:max-w-3xl">
-                <img :src="game.background_image" class="mb-4 aspect-video w-full border-2 border-gray-800 object-cover" />
+                <img
+                    :src="game.background_image"
+                    class="mb-4 aspect-video w-full border-2 border-gray-800 object-cover"
+                />
 
                 <p class="mb-8 leading-8">
                     Dive into the immersive world of <strong>{{ game.name }}</strong
@@ -48,9 +61,17 @@
                 <!-- Ratings -->
                 <p class="mb-4 text-lg font-semibold">Ratings</p>
                 <ul class="justify-between border p-3 sm:flex">
-                    <li v-for="rating in game.ratings" :key="rating.id">
+                    <li
+                        v-for="rating in game.ratings"
+                        :key="rating.id"
+                    >
                         <p class="mb-2 text-center font-medium">{{ rating.title[0].toUpperCase() + rating.title.slice(1) }}</p>
-                        <CircleProgressBar :value="rating.percent" :max="100" :size="80" class="font-semibold">
+                        <CircleProgressBar
+                            :value="rating.percent"
+                            :max="100"
+                            :size="80"
+                            class="font-semibold"
+                        >
                             {{ rating.percent }}%
                         </CircleProgressBar>
                     </li>
@@ -67,13 +88,17 @@
             <ul class="divide-y-2">
                 <li class="py-3">
                     <span class="mr-4 text-lg font-medium">Developer(s)</span>
-                    <span v-for="(dev, index) in game.developers" :key="dev.id"
+                    <span
+                        v-for="(dev, index) in game.developers"
+                        :key="dev.id"
                         >{{ dev.name }}{{ index + 1 == game.developers.length ? '' : ', ' }}</span
                     >
                 </li>
                 <li class="py-3">
                     <span class="mr-4 text-lg font-medium">Publisher(s):</span>
-                    <span v-for="(publisher, index) in game.publishers" :key="publisher.id"
+                    <span
+                        v-for="(publisher, index) in game.publishers"
+                        :key="publisher.id"
                         >{{ publisher.name }}{{ index + 1 == game.publishers.length ? '' : ', ' }}</span
                     >
                 </li>
@@ -83,14 +108,19 @@
                 </li>
                 <li class="py-3">
                     <span class="text-lg font-medium">Platforms: </span>
-                    <span v-for="(platform, index) in game.platforms" :key="index"
+                    <span
+                        v-for="(platform, index) in game.platforms"
+                        :key="index"
                         >{{ platform.platform.name }}{{ index + 1 == game.platforms.length ? '' : ', ' }}</span
                     >
                 </li>
             </ul>
         </section>
     </section>
-    <section v-else class="text-center">
+    <section
+        v-else
+        class="text-center"
+    >
         <SpinnerAntd size="large" />
     </section>
 </template>

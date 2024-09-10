@@ -2,12 +2,15 @@
     <div class="flex min-h-screen">
         <AsideNavigation />
 
-        <section class="ml-20 md:ml-28 mr-10 mt-12 grid w-2/4 max-w-7xl grow grid-rows-[1fr_60px] xl:mx-auto">
+        <section class="ml-20 mr-10 mt-12 grid w-2/4 max-w-7xl grow grid-rows-[1fr_60px] md:ml-28 xl:mx-auto">
             <main>
                 <router-view />
             </main>
 
-            <footer class="p-4 text-center font-medium">Created with ❤️ by Carlos Zambrano</footer>
+            <footer class="p-4 text-center font-medium">
+                Created with ❤️ by
+                <a class="decoration-inherit hover:underline" href="https://github.com/carlpy">Carlos Zambrano</a>
+            </footer>
         </section>
     </div>
 </template>

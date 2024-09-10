@@ -47,7 +47,7 @@
 
                 <!-- Ratings -->
                 <p class="mb-4 text-lg font-semibold">Ratings</p>
-                <ul class="sm:flex justify-between border p-3">
+                <ul class="justify-between border p-3 sm:flex">
                     <li v-for="rating in game.ratings" :key="rating.id">
                         <p class="mb-2 text-center font-medium">{{ rating.title[0].toUpperCase() + rating.title.slice(1) }}</p>
                         <CircleProgressBar :value="rating.percent" :max="100" :size="80" class="font-semibold">
@@ -105,14 +105,11 @@ import { CircleProgressBar } from 'circle-progress.vue';
 
 //-------------------- Vue components --------------------------\\
 import SpinnerAntd from '@/components/utils/SpinnerAntd.vue';
-import ButtonGame from '@/components/ButtonGame.vue';
 
 export default {
     components: {
         SpinnerAntd,
         CircleProgressBar,
-
-        ButtonGame,
     },
     setup() {
         const route = useRoute();
